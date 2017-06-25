@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gens.ca.gameoflife1.GameOfLifeGenController">
+   <children>
+      <Button fx:id="buttonGenerate" layoutX="137.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleGenerate" text="Generate" />
+      <Button fx:id="buttonMouseInput" layoutX="377.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleMouseInput" text="Mouse Input" />
+      <Label layoutX="134.0" layoutY="60.0" text="Cells per row" />
+      <Label layoutX="386.0" layoutY="60.0" text="Generations" />
+      <Label layoutX="385.0" layoutY="154.0" text="Cell size (px)" />
+      <TextField fx:id="textFieldCellSize" layoutX="398.0" layoutY="180.0" prefHeight="26.0" prefWidth="57.0" />
+      <TextField fx:id="textFieldCells" layoutX="91.0" layoutY="90.0" />
+      <TextField fx:id="textFieldGens" layoutX="341.0" layoutY="90.0" />
+      <Label layoutX="159.0" layoutY="154.0" text="Edges" />
+      <RadioButton fx:id="radioButtonFixed" layoutX="127.0" layoutY="184.0" mnemonicParsing="false" text="fixed">
+         <toggleGroup>
+            <ToggleGroup fx:id="toggleGrpEdges" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="radioButtonWrapped" layoutX="127.0" layoutY="210.0" mnemonicParsing="false" text="wrapped" toggleGroup="$toggleGrpEdges" />
+      <Slider fx:id="sliderPopDens" blockIncrement="0.1" layoutX="357.0" layoutY="265.0" max="1.0" minorTickCount="5" showTickLabels="true" />
+      <Label layoutX="365.0" layoutY="240.0" text="Population Density" />
+      <TextField fx:id="textFieldPopDens" layoutX="386.0" layoutY="298.0" prefHeight="26.0" prefWidth="80.0" />
+      <Label layoutX="147.0" layoutY="274.0" text="Step (ms)" />
+      <TextField fx:id="textFieldStep" layoutX="99.0" layoutY="298.0" />
+      <Label layoutX="75.0" layoutY="20.0" text="Mouse input will set cells per row to 60 and cell size to 10 px!">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonStop" layoutX="276.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleStop" text="Stop" />
+   </children>
+</AnchorPane>

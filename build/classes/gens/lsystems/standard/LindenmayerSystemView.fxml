@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?> 
+<?import javafx.collections.*?> 
+
+<GridPane prefHeight="460.0" prefWidth="600.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gens.lsystems.standard.LindenmayerSystemController">
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+    <children>
+        <Label text="Width:"  GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="widthField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>  
+        <Label text="Height:"  GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="heightField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Separator GridPane.columnSpan="2" GridPane.rowIndex="2"/>
+        <Label text="Load Example:"  GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <ComboBox fx:id="exampleDropdown" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Label text="Alphabet (enter as unseperated String):"  GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+        <TextField fx:id="alphabetField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        <Label text="Axiom:"  GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+        <TextField fx:id="axiomField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+        <Label text="Starting Angle (in degrees):" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+        <TextField fx:id="startingAngleField" GridPane.columnIndex="1" GridPane.rowIndex="6" /> 
+        <Label text="Rotation Angle (in degrees):" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+        <TextField fx:id="rotationAngleField" GridPane.columnIndex="1" GridPane.rowIndex="7" /> 
+        <Label text="Number of Iterations:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+        <TextField fx:id="iterationsField" GridPane.columnIndex="1" GridPane.rowIndex="8" /> 
+        <Separator GridPane.columnSpan="2" GridPane.rowIndex="9"/>
+        <Label text="Rules [e.g. F=F+X]:"  GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+        <TextArea fx:id="rulesArea" GridPane.columnIndex="0" GridPane.rowIndex="11" GridPane.columnSpan="2" prefHeight="200" minHeight="200"/>
+                                
+        <Separator GridPane.columnSpan="2" GridPane.rowIndex="12"/>
+                     
+        <Button fx:id="buttonReset" GridPane.rowIndex="13" GridPane.columnIndex="0" onAction="#handleReset" text="Reset" />       
+        <Button fx:id="buttonGenerate" GridPane.rowIndex="13" GridPane.columnIndex="1" onAction="#handleGenerate" text="Generate" />
+                
+    </children>  
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
+    </columnConstraints>
+</GridPane>
+        

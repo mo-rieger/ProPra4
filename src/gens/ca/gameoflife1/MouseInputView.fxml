@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gens.ca.gameoflife1.MouseInputController">
+   <children>
+      <Button fx:id="buttonGenerate" layoutX="361.0" layoutY="660.0" mnemonicParsing="false" onAction="#handleGenerate" text="Generate" />
+      <Pane fx:id="wrapperPane" layoutX="100.0" layoutY="28.0" prefHeight="600.0" prefWidth="600.0" />
+   </children>
+</AnchorPane>
