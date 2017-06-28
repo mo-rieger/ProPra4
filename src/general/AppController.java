@@ -117,6 +117,11 @@ public class AppController {
         showSpecializedGenView("Probabilistic Lindenmayer System",
                 "/gens/lsystems/probabilistic/ProbabilisticLindenmayerSystemView.fxml");
     }
+    @FXML
+    private void showStandardRFTGenView() {
+        showSpecializedGenView("Standard Random Function Tree",
+                "/gens/rft/standard/RandomFunctionTreeView.fxml");
+    } 
     
     /**
      * Displays a new view of a specialized Generator.
