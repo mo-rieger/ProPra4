@@ -23,33 +23,23 @@
  */
 package gens.rft;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Moritz Rieger
  */
 public class Function implements TreeNode{
-    //TreeNode Variables
-    private ArrayList<TreeNode> children;
-    private TreeNode parent;
+    
+    private Function[] children;
+    private Function parent;
+    
     private int type;
     
     /**
-     * unary function
-     * @param x
-     * @param y 
+     * 
+     * @param type 1 for unary, 2 binary ...
      */
-    public Function(double x) {
-        type = 1;
-    }
-    /**
-     * binary function
-     * @param x
-     * @param y 
-     */
-    public Function(double x, double y) {
-        type = 2;
+    public Function(int type) {
+        this.type = type;
     }
     
     public double getResult(double x, double y){
@@ -57,23 +47,33 @@ public class Function implements TreeNode{
     }
 
     @Override
-    public TreeNode getParent() {
+    public Function getParent() {
         return parent;
     }
 
     @Override
-    public ArrayList<TreeNode> getChildren() {
+    public Function[] getChildren() {
         return children;
     }
 
     @Override
-    public void setChildren(ArrayList<TreeNode> nodes) {
-        children = nodes;
+    public void setChildren(TreeNode[] nodes) {
+        children = (Function[]) nodes;
     }
 
     @Override
     public void setParent(TreeNode node) {
-        parent = node;
+        parent = (Function) node;
+    }
+    @Override
+    public  int getChildrenCount(){
+        if(children != null)
+            return children.length;
+        else
+            return 0;
+    }
+    public int getType(){
+        return type;
     }
     
 }

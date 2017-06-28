@@ -31,7 +31,8 @@ import java.util.ArrayList;
  */
 public interface TreeNode {
     TreeNode getParent();
-    ArrayList<TreeNode> getChildren();
-    void setChildren(ArrayList<TreeNode> nodes);
+    TreeNode[] getChildren();
+    void setChildren(TreeNode[] nodes);
     void setParent(TreeNode node);
+    int getChildrenCount();
 }

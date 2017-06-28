@@ -27,10 +27,12 @@ import general.GenController;
 import general.GenModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.util.converter.NumberStringConverter;
 
 /**
  * FXML Controller class
@@ -59,7 +61,10 @@ public class RandomFunctionTreeController extends GenController implements Initi
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize();
-        
+        Bindings.bindBidirectional(textAreaWidth.textProperty(), model.getWidthProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(textAreaHeight.textProperty(), model.getHeightProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(textAreaMinDepth.textProperty(), model.getMinDepthProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(textAreaMaxDepth.textProperty(), model.getMaxDepthProperty(), new NumberStringConverter());       
     }    
 
     @FXML
