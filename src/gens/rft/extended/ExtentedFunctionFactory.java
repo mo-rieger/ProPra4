@@ -21,29 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package gens.rft;
-
-import java.util.Random;
+package gens.rft.extended;
+import gens.rft.Function;
+import gens.rft.FunctionFactory;
 
 /**
  *
  * @author Moritz Rieger
  */
-public class FunctionFactory {
+public class ExtentedFunctionFactory extends FunctionFactory{
     
-    protected static final int UNARY = 1;
-    protected static final int BINARY = 2;
-    //need to be adjusted when you add a new function into the createFunction method
-    private final int AMOUNT_OF_FUNCTIONS = 6;
-    private Random random;
+    protected final int TERTIARY = 3;
     
-    public FunctionFactory(int seed){
-        random = new Random(seed);
+    public ExtentedFunctionFactory(int seed) {
+        super(seed);
     }
-
-    public Function getRandomFunction(){
-        return createFunction(random.nextInt(AMOUNT_OF_FUNCTIONS));
-    }
+    
     /**
      * if you add a function to this method make sure its picture is just in the right intervall [0,1]
      * @param id
@@ -87,11 +80,13 @@ public class FunctionFactory {
                     return Math.abs(x-y);
                 }
                 };
+             case 6: return new Function(TERTIARY){
+                @Override
+                public double getResult(double x, double y){
+                    return Math.abs(x-y);
+                }
+                };
             default: return null;
         }
     }
-    public void setSeed(int seed){
-        random = new Random(seed);
-    }
-    
 }

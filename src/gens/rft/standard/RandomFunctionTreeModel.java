@@ -51,11 +51,11 @@ public class RandomFunctionTreeModel extends GenModel {
     private final IntegerProperty widthProperty = new SimpleIntegerProperty(250);
     private final IntegerProperty heightProperty = new SimpleIntegerProperty(250);
     private final DoubleProperty depthProperty = new SimpleDoubleProperty(3);
-    private final IntegerProperty seedProperty = new SimpleIntegerProperty(105);
+    protected final IntegerProperty seedProperty = new SimpleIntegerProperty(105);
     private final DoubleProperty hueProperty = new SimpleDoubleProperty(50);
     private final IntegerProperty imagesCountProperty = new SimpleIntegerProperty(6);
     private boolean createSet = false;
-    private FunctionFactory funcFactory;
+    protected FunctionFactory funcFactory;
     
     public RandomFunctionTreeModel(){
         funcFactory = new FunctionFactory(seedProperty.getValue());
@@ -177,7 +177,7 @@ public class RandomFunctionTreeModel extends GenModel {
     public IntegerProperty getImagesCountProperty() {
         return imagesCountProperty;
     }
-    private void setHue(){
+    public void setHue(){
         hue = hueProperty.intValue();
     }
     public void setCreateSet(boolean createSet){

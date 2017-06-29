@@ -102,7 +102,7 @@ public class RandomFunctionTreeController extends GenController implements Initi
     private void handleCreateSet(ActionEvent event) {
         boolean isSelected = createSetToggleButton.selectedProperty().getValue();
         saveToButton.setDisable(!isSelected);
-        imagesComboBox.setDisable(isSelected);
+        imagesComboBox.setDisable(!isSelected);
         String text = isSelected ? "Create Set" : "Create Image";
         createSetToggleButton.setText(text);
         model.setCreateSet(isSelected);

@@ -33,6 +33,7 @@ import gens.rft.standard.RandomFunctionTreeModel;
  */
 public class RandomFunctionTreeExtendedController extends RandomFunctionTreeController {
     private RandomFunctionTreeExtendedModel model =  new RandomFunctionTreeExtendedModel();
+    
     @Override
     public GenModel getModel() {
         return model;

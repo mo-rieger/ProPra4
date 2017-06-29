@@ -30,6 +30,12 @@ import gens.rft.standard.RandomFunctionTreeModel;
  * @author Moritz Rieger
  */
 public class RandomFunctionTreeExtendedModel extends RandomFunctionTreeModel{
+    
+    public RandomFunctionTreeExtendedModel(){
+        funcFactory = new ExtentedFunctionFactory(seedProperty.getValue());
+        setHue();
+    }
+    
     @Override
     public String getGenName() {
         return "Extended Random Function Tree Generator";
