@@ -42,11 +42,8 @@ public class Function implements TreeNode{
         this.type = type;
     }
     
-    public double getResult(double x, double y){
-        if(type == 1)
-            return Math.sin(2*Math.PI*x);
-        else
-            return (x+y)/2.0;
+    public double getResult(double[] param){
+        return param[0];
     }
 
     @Override

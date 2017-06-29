@@ -91,8 +91,7 @@ public class RandomFunctionTreeModel extends GenModel {
         for(int x = 0; x < widthProperty.getValue(); x++){
             percentage =(int) ((double)(x*heightProperty.getValue())/(double)(widthProperty.getValue()*heightProperty.getValue())*100);
             for(int y = 0; y < heightProperty.getValue(); y++){
-                double[] nCoords = normalize(x,y);
-                double result = evalRFT(rootNode, nCoords[0], nCoords[1]);
+                double result = evalRFT(rootNode, normalize(x,y));
                 pw.setColor(x, y, getColor(result));
             }
             setGenState("Calculating Randomized Function Tree Image  " + percentage + " %");
@@ -137,22 +136,22 @@ public class RandomFunctionTreeModel extends GenModel {
      * @param y
      * @return 
      */
-    private double evalRFT(Function node, double x, double y){
+    private double evalRFT(Function node, double[] parameter){
         if(node.getChildrenCount() > 0){
             Function[] children = (Function[]) node.getChildren();
             //save results from each children
             double[] values = new double[children.length];
             for(int i=0; i<children.length; i++){
-                values[i] = evalRFT(children[i], x, y);
+                values[i] = evalRFT(children[i], parameter);
             }
             //when all childrens are evaluated we can set the values of the children in this nodes function
             switch (node.getType()){
-                case UNARY: return node.getResult(values[0], values[0]);
-                case BINARY: return node.getResult(values[0], values[1]);
-                default: return node.getResult(values[0], values[0]); //this should never be reached, just to satisfy javacompiler
+                case UNARY: return node.getResult(values);
+                case BINARY: return node.getResult(values);
+                default: return node.getResult(values); //this should never be reached, just to satisfy javacompiler
             }
         }else{
-            return node.getResult(x, y);
+            return node.getResult(parameter);
         }
     }
     

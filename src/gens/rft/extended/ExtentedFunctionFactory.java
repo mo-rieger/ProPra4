@@ -32,61 +32,10 @@ import gens.rft.FunctionFactory;
 public class ExtentedFunctionFactory extends FunctionFactory{
     
     protected final int TERTIARY = 3;
+    protected final int AMOUNT_OF_FUNCTIONS = 7;
     
     public ExtentedFunctionFactory(int seed) {
         super(seed);
     }
     
-    /**
-     * if you add a function to this method make sure its picture is just in the right intervall [0,1]
-     * @param id
-     * @return 
-     */
-    private Function createFunction(int id){
-        switch(id){
-            case 0: return new Function(UNARY){
-                @Override
-                public double getResult(double x, double y){
-                    return Math.abs(Math.sin(2*Math.PI*x));
-                }
-                };
-            case 1: return new Function(UNARY){
-                @Override
-                public double getResult(double x, double y){
-                    return Math.abs(Math.cos(2*Math.PI*x));
-                }
-                };
-            case 2: return new Function(BINARY){
-                @Override
-                public double getResult(double x, double y){
-                    return Math.pow(x, y);
-                }
-                };
-            case 3: return new Function(BINARY){
-                @Override
-                public double getResult(double x, double y){
-                    return (x+y)/2;
-                }
-                };
-            case 4: return new Function(BINARY){
-                @Override
-                public double getResult(double x, double y){
-                    return x*y;
-                }
-                };
-            case 5: return new Function(BINARY){
-                @Override
-                public double getResult(double x, double y){
-                    return Math.abs(x-y);
-                }
-                };
-             case 6: return new Function(TERTIARY){
-                @Override
-                public double getResult(double x, double y){
-                    return Math.abs(x-y);
-                }
-                };
-            default: return null;
-        }
-    }
 }

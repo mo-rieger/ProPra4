@@ -34,7 +34,7 @@ public class FunctionFactory {
     protected static final int UNARY = 1;
     protected static final int BINARY = 2;
     //need to be adjusted when you add a new function into the createFunction method
-    private final int AMOUNT_OF_FUNCTIONS = 6;
+    protected final int AMOUNT_OF_FUNCTIONS = 6;
     private Random random;
     
     public FunctionFactory(int seed){
@@ -53,38 +53,38 @@ public class FunctionFactory {
         switch(id){
             case 0: return new Function(UNARY){
                 @Override
-                public double getResult(double x, double y){
-                    return Math.abs(Math.sin(2*Math.PI*x));
+                public double getResult(double[] param){
+                    return Math.abs(Math.sin(2*Math.PI*param[0]));
                 }
                 };
             case 1: return new Function(UNARY){
                 @Override
-                public double getResult(double x, double y){
-                    return Math.abs(Math.cos(2*Math.PI*x));
+                public double getResult(double[] param){
+                    return Math.abs(Math.cos(2*Math.PI*param[0]));
                 }
                 };
             case 2: return new Function(BINARY){
                 @Override
-                public double getResult(double x, double y){
-                    return Math.pow(x, y);
+                public double getResult(double[] param){
+                    return Math.pow(param[0], param[1]);
                 }
                 };
             case 3: return new Function(BINARY){
                 @Override
-                public double getResult(double x, double y){
-                    return (x+y)/2;
+                public double getResult(double[] param){
+                    return (param[0]+param[1])/2;
                 }
                 };
             case 4: return new Function(BINARY){
                 @Override
-                public double getResult(double x, double y){
-                    return x*y;
+                public double getResult(double[] param){
+                    return param[0]*param[1];
                 }
                 };
             case 5: return new Function(BINARY){
                 @Override
-                public double getResult(double x, double y){
-                    return Math.abs(x-y);
+                    public double getResult(double[] param){
+                    return Math.abs(param[0]-param[1]);
                 }
                 };
             default: return null;
