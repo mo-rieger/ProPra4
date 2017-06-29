@@ -54,14 +54,10 @@ public class RandomFunctionTreeModel extends GenModel {
     private final IntegerProperty seedProperty = new SimpleIntegerProperty(105);
     private final DoubleProperty hueProperty = new SimpleDoubleProperty(50);
     private FunctionFactory funcFactory;
-    private Function[] functions;
     
     public RandomFunctionTreeModel(){
-        //createFunctions();
         funcFactory = new FunctionFactory(seedProperty.getValue());
-        //random = new Random(seedProperty.getValue());
         setHue();
-        
     }
     
     public void validate() {
@@ -83,15 +79,16 @@ public class RandomFunctionTreeModel extends GenModel {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
         //loop through every pixel
+        int percentage;
         for(int x = 0; x < widthProperty.getValue(); x++){
+            percentage =(int) ((double)(x*heightProperty.getValue())/(double)(widthProperty.getValue()*heightProperty.getValue())*100);
             for(int y = 0; y < heightProperty.getValue(); y++){
                 double[] nCoords = normalize(x,y);
                 double result = evalRFT(rootNode, nCoords[0], nCoords[1]);
-                int percentage =(int) ((double)(x*heightProperty.getValue())/(double)(widthProperty.getValue()*heightProperty.getValue())*100);
-                setGenState("Calculating Randomized Function Tree Image  " + percentage + " %");
                 pw.setColor(x, y, getColor(result));
                 //waitForCanvasIterationDisplayedInApp();
             }
+            setGenState("Calculating Randomized Function Tree Image  " + percentage + " %");
         }
     }
     
@@ -112,17 +109,6 @@ public class RandomFunctionTreeModel extends GenModel {
         return hueProperty;
     }
 
-    private void createFunctions(){
-        functions = new Function[6];
-        //unary functions
-        functions[0] = new Function(UNARY);
-        functions[1] = new Function(UNARY);
-        functions[2] = new Function(BINARY);
-        //binary functions
-        functions[3] = new Function(BINARY);
-        functions[4] = new Function(BINARY);
-        functions[5] = new Function(BINARY);
-    }
     private double[] normalize(int x,int y){
         double[] result = {x/widthProperty.doubleValue(), y/heightProperty.doubleValue()};
         return result;
@@ -144,7 +130,6 @@ public class RandomFunctionTreeModel extends GenModel {
             }
             node.setChildren(children);
         }
-        //System.out.println("childrencount"+node.getChildrenCount());
         return node;
     }
     /**
@@ -174,7 +159,6 @@ public class RandomFunctionTreeModel extends GenModel {
     }
     
     private Color getColor(double val){
-        val = Math.abs(val);
         return Color.hsb((val*360+hue)%360, val, val);
          
     }

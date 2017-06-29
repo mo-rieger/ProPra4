@@ -86,10 +86,5 @@ public class RandomFunctionTreeController extends GenController implements Initi
     @Override
     public GenModel getModel() {
         return model;
-    }
-
-    @FXML
-    private void handleDepthSlider(MouseEvent event) {
-    }
-    
+    }    
 }
