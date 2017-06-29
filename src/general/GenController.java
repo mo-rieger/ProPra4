@@ -28,6 +28,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 /**
  * This is an abstract GenController which all specialized
@@ -39,6 +40,8 @@ import javafx.scene.input.KeyEvent;
  * @author Christoph Baumhardt
  */
 public abstract class GenController {
+    
+    private Stage stage;
     
     /**
      * Each SpecializedGeneratorView.fxml file has to have a Button with fx:id
@@ -119,4 +122,10 @@ public abstract class GenController {
         alert.setContentText(description);
         alert.showAndWait();        
     }    
+    public void setStage(Stage stage){
+        this.stage = stage;
+    }
+    protected Stage getStage(){
+        return stage;
+    }
 }

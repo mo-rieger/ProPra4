@@ -53,6 +53,8 @@ public class RandomFunctionTreeModel extends GenModel {
     private final DoubleProperty depthProperty = new SimpleDoubleProperty(3);
     private final IntegerProperty seedProperty = new SimpleIntegerProperty(105);
     private final DoubleProperty hueProperty = new SimpleDoubleProperty(50);
+    private final IntegerProperty imagesCountProperty = new SimpleIntegerProperty(6);
+    private boolean createSet = false;
     private FunctionFactory funcFactory;
     
     public RandomFunctionTreeModel(){
@@ -71,11 +73,17 @@ public class RandomFunctionTreeModel extends GenModel {
 
     @Override
     public void generate() {
+        canvas = new Canvas(widthProperty.getValue(), heightProperty.getValue());
+        if(createSet)
+            generateSet();
+        else
+            generateImage();
+    }
+    public void generateImage(){
         // to generate the same image with the same seed we have to reset the pseudorandom int-stream
         funcFactory.setSeed(seedProperty.intValue());
         setHue();
-        Function rootNode = createTree(depthProperty.intValue());
-        canvas = new Canvas(widthProperty.getValue(), heightProperty.getValue());
+        Function rootNode = createTree(depthProperty.intValue());  
         GraphicsContext gc = canvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
         //loop through every pixel
@@ -86,29 +94,19 @@ public class RandomFunctionTreeModel extends GenModel {
                 double[] nCoords = normalize(x,y);
                 double result = evalRFT(rootNode, nCoords[0], nCoords[1]);
                 pw.setColor(x, y, getColor(result));
-                //waitForCanvasIterationDisplayedInApp();
             }
             setGenState("Calculating Randomized Function Tree Image  " + percentage + " %");
         }
     }
-    
-    public IntegerProperty getWidthProperty() {
-    return widthProperty;
+    private void generateSet(){
+        Random rnd  = new Random();
+        for(int i = 0; i < imagesCountProperty.intValue(); i++){
+            seedProperty.set(rnd.nextInt());
+            depthProperty.set(rnd.nextInt(10));
+            generateImage();
+            this.saveImage("depth"+depthProperty.intValue()+"seed"+seedProperty.intValue()+"hue"+hue);
+        }
     }
-
-    public IntegerProperty getHeightProperty() {
-        return heightProperty;
-    }
-    public IntegerProperty getSeedProperty() {
-        return seedProperty;
-    }
-    public DoubleProperty getDepthProperty() {
-        return depthProperty;
-    }
-    public DoubleProperty getHueProperty() {
-        return hueProperty;
-    }
-
     private double[] normalize(int x,int y){
         double[] result = {x/widthProperty.doubleValue(), y/heightProperty.doubleValue()};
         return result;
@@ -159,10 +157,30 @@ public class RandomFunctionTreeModel extends GenModel {
     }
     
     private Color getColor(double val){
-        return Color.hsb((val*360+hue)%360, val, val);
-         
+        return Color.hsb((val*360+hue)%360, val, val);     
+    } 
+    public IntegerProperty getWidthProperty() {
+        return widthProperty;
+    }
+    public IntegerProperty getHeightProperty() {
+        return heightProperty;
+    }
+    public IntegerProperty getSeedProperty() {
+        return seedProperty;
+    }
+    public DoubleProperty getDepthProperty() {
+        return depthProperty;
+    }
+    public DoubleProperty getHueProperty() {
+        return hueProperty;
+    }
+    public IntegerProperty getImagesCountProperty() {
+        return imagesCountProperty;
     }
     private void setHue(){
         hue = hueProperty.intValue();
+    }
+    public void setCreateSet(boolean createSet){
+        this.createSet = createSet;
     }
 }

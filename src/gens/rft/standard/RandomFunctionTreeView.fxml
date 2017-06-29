@@ -102,8 +102,9 @@
                         <Label prefHeight="17.0" prefWidth="118.0" text="Number of images:" GridPane.rowIndex="1" />
                         <Label text="Create a set of Images" />
                         <Label text="Path:" GridPane.rowIndex="2" />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSaveToButton" prefHeight="27.0" prefWidth="162.0" text="Save to" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ComboBox prefHeight="27.0" prefWidth="165.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="saveToButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSaveToButton" prefHeight="27.0" prefWidth="162.0" text="Save to" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="imagesComboBox" prefHeight="27.0" prefWidth="165.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ToggleButton fx:id="createSetToggleButton" mnemonicParsing="false" onAction="#handleCreateSet" text="Create Set" GridPane.columnIndex="1" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

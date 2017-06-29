@@ -189,6 +189,7 @@ public class AppController {
                 });                 
                 genStage.setScene(new Scene(content));
                 genStage.setResizable(false);
+                genController.setStage(genStage);
                 genStage.show();                
                 
             }  catch (IOException e) {

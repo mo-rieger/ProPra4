@@ -33,8 +33,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.util.converter.NumberStringConverter;
@@ -57,9 +59,15 @@ public class RandomFunctionTreeController extends GenController implements Initi
     @FXML
     private Button buttonGenerate;
     @FXML
+    private ToggleButton createSetToggleButton;
+    @FXML
+    private Button saveToButton;
+    @FXML
     private Slider depthSlider;
     @FXML
     private Slider hueSlider;
+    @FXML
+    private ComboBox imagesComboBox;
     
 
     /**
@@ -68,11 +76,17 @@ public class RandomFunctionTreeController extends GenController implements Initi
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize();
+        imagesComboBox.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12);
+        saveToButton.setDisable(true);
+        imagesComboBox.setDisable(true);
+        //connect model and view via Bindings
         Bindings.bindBidirectional(textAreaWidth.textProperty(), model.getWidthProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(textAreaHeight.textProperty(), model.getHeightProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(textAreaSeed.textProperty(), model.getSeedProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(depthSlider.valueProperty(), model.getDepthProperty());
         Bindings.bindBidirectional(hueSlider.valueProperty(), model.getHueProperty());
+        Bindings.bindBidirectional(imagesComboBox.valueProperty(), model.getImagesCountProperty());
+        
     }    
 
     @FXML
@@ -85,11 +99,24 @@ public class RandomFunctionTreeController extends GenController implements Initi
         }
     }
     @FXML
+    private void handleCreateSet(ActionEvent event) {
+        boolean isSelected = createSetToggleButton.selectedProperty().getValue();
+        saveToButton.setDisable(!isSelected);
+        imagesComboBox.setDisable(!isSelected);
+        String text = isSelected ? "Create Set" : "Create Image";
+        createSetToggleButton.setText(text);
+        model.setCreateSet(isSelected);
+        System.out.println("Set " + isSelected);
+    }
+    @FXML
     private void handleSaveToButton(ActionEvent event) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Path for RFT Images");
         chooser.setInitialDirectory(new File(model.getSavePath()));
-        //File selectedDirectory = chooser.;
+        File selectedDirectory = chooser.showDialog(getStage());
+        //System.out.println(selectedDirectory.getPath());
+        if(selectedDirectory != null)
+            model.setSavePath(selectedDirectory.getPath());
     }
 
     @Override
