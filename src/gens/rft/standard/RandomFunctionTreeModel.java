@@ -25,6 +25,7 @@ package gens.rft.standard;
 
 import general.GenModel;
 import gens.rft.Function;
+import gens.rft.FunctionFactory;
 import gens.rft.TreeNode;
 import java.util.Random;
 import javafx.beans.property.IntegerProperty;
@@ -51,16 +52,18 @@ public class RandomFunctionTreeModel extends GenModel {
     private final IntegerProperty heightProperty = new SimpleIntegerProperty(250);
     private final IntegerProperty minDepthProperty = new SimpleIntegerProperty(2);
     private final IntegerProperty maxDepthProperty = new SimpleIntegerProperty(6);
-    private final IntegerProperty seedProperty = new SimpleIntegerProperty(10);
+    private final IntegerProperty seedProperty = new SimpleIntegerProperty(8);
+    private FunctionFactory funcFactory;
     private Function[] functions;
     private Random random;
     
     public RandomFunctionTreeModel(){
-        createFunctions();
-        random = new Random(seedProperty.getValue());
-        R = random.nextInt(255);
-        G = random.nextInt(255);
-        B = random.nextInt(255);
+        //createFunctions();
+        funcFactory = new FunctionFactory(seedProperty.getValue());
+        //random = new Random(seedProperty.getValue());
+        R = 150;//color slider
+        G = 50;//color slider
+        B = 25;//color slider
         
     }
     
@@ -82,7 +85,7 @@ public class RandomFunctionTreeModel extends GenModel {
         //loop through every pixel
         for(int x = 0; x < widthProperty.getValue(); x++){
             for(int y = 0; y < heightProperty.getValue(); y++){
-                int rnd = random.nextInt(functions.length);
+                //int rnd = random.nextInt(functions.length);
                 //System.out.println("function no. " + rnd);
                 double[] nCoords = normalize(x,y);
                 //double result = functions[rnd].getResult(nCoords[0], nCoords[1]);
@@ -116,43 +119,13 @@ public class RandomFunctionTreeModel extends GenModel {
     private void createFunctions(){
         functions = new Function[6];
         //unary functions
-        functions[0] = new Function(UNARY){
-          @Override
-          public double getResult(double x, double y){
-              return Math.sin(2*Math.PI*x);
-          }
-        };
-        functions[1] = new Function(UNARY){
-          @Override
-          public double getResult(double x, double y){
-              return Math.cos(2*Math.PI*x);
-          }
-        };
-        functions[2] = new Function(BINARY){
-          @Override
-          public double getResult(double x, double y){
-              return Math.pow(x, y);
-          }
-        };
+        functions[0] = new Function(UNARY);
+        functions[1] = new Function(UNARY);
+        functions[2] = new Function(BINARY);
         //binary functions
-        functions[3] = new Function(BINARY){
-          @Override
-          public double getResult(double x, double y){
-              return (x+y)/2;
-          }
-        };
-        functions[4] = new Function(BINARY){
-          @Override
-          public double getResult(double x, double y){
-              return x*y;
-          }
-        };
-        functions[5] = new Function(BINARY){
-          @Override
-          public double getResult(double x, double y){
-              return x-y;
-          }
-        };
+        functions[3] = new Function(BINARY);
+        functions[4] = new Function(BINARY);
+        functions[5] = new Function(BINARY);
     }
     private double[] normalize(int x,int y){
         double[] result = {x/widthProperty.doubleValue(), y/heightProperty.doubleValue()};
@@ -166,7 +139,7 @@ public class RandomFunctionTreeModel extends GenModel {
     private Function createTree(int depth){
         Function node;
         //take random function from pool
-        node = functions[random.nextInt(functions.length-1)];
+        node = funcFactory.getRandomFunction();
         //create one children for unary, two for binary ...
           if(depth > 0){
             Function[] children = new Function[node.getType()];
@@ -175,7 +148,7 @@ public class RandomFunctionTreeModel extends GenModel {
             }
             node.setChildren(children);
         }
-        System.out.println("childrencount"+node.getChildrenCount());
+        //System.out.println("childrencount"+node.getChildrenCount());
         return node;
     }
     /**
@@ -186,7 +159,7 @@ public class RandomFunctionTreeModel extends GenModel {
      * @return 
      */
     private double evalRFT(Function node, double x, double y){
-        System.out.println("count" + node.getChildrenCount());
+        //System.out.println("count" + node.getChildrenCount());
         if(node.getChildrenCount() > 0){
             Function[] children = (Function[]) node.getChildren();
             //save results from each children
@@ -201,15 +174,15 @@ public class RandomFunctionTreeModel extends GenModel {
                 default: return node.getResult(values[0], values[0]); //this should never be reached, just to satisfy javacompiler
             }
         }else{
-            System.out.println("Coords for x"+ x+ " y " + y);
+            //System.out.println("Coords for x"+ x+ " y " + y);
             return node.getResult(x, y);
         }
     }
     
     private Color getColor(double val){
-        int r = (int) (R * val);
-        int g = (int) (G * val);
-        int b = (int) (B * val);
+        int r = (int) (R * Math.abs(val));
+        int g = (int) (G * Math.abs(val));
+        int b = (int) (B * Math.abs(val));
         return Color.rgb(r,g,b);
     }
 

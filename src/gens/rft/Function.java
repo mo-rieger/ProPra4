@@ -43,7 +43,10 @@ public class Function implements TreeNode{
     }
     
     public double getResult(double x, double y){
-        throw new UnsupportedOperationException("Not supported yet. Must be overriden"); //To change body of generated methods, choose Tools | Templates.
+        if(type == 1)
+            return Math.sin(2*Math.PI*x);
+        else
+            return (x+y)/2.0;
     }
 
     @Override
