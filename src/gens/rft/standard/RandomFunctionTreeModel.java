@@ -83,12 +83,11 @@ public class RandomFunctionTreeModel extends GenModel {
         for(int x = 0; x < widthProperty.getValue(); x++){
             for(int y = 0; y < heightProperty.getValue(); y++){
                 int rnd = random.nextInt(functions.length);
-                System.out.println("function no. " + rnd);
+                //System.out.println("function no. " + rnd);
                 double[] nCoords = normalize(x,y);
                 //double result = functions[rnd].getResult(nCoords[0], nCoords[1]);
                 double result = evalRFT(rootNode, nCoords[0], nCoords[1]);
-                System.out.println("Result "+result+" for x"+ x+ " y " + y);
-                //drawPixel(x,y, getColor(result));
+                //System.out.println("Result "+result+" for x"+ x+ " y " + y);
                 int percentage =(int) ((double)(x*heightProperty.getValue())/(double)(widthProperty.getValue()*heightProperty.getValue())*100);
                 setGenState("Calculating Randomized Function Tree Image  " + percentage + " %");
                 pw.setColor(x, y, getColor(result));
@@ -169,13 +168,14 @@ public class RandomFunctionTreeModel extends GenModel {
         //take random function from pool
         node = functions[random.nextInt(functions.length-1)];
         //create one children for unary, two for binary ...
-        if(depth > 0){
+          if(depth > 0){
             Function[] children = new Function[node.getType()];
             for(int i=0; i < children.length; i++){
                 children[i] = createTree(depth-1);
             }
             node.setChildren(children);
         }
+        System.out.println("childrencount"+node.getChildrenCount());
         return node;
     }
     /**
@@ -186,11 +186,12 @@ public class RandomFunctionTreeModel extends GenModel {
      * @return 
      */
     private double evalRFT(Function node, double x, double y){
-        if(node.getChildrenCount()>0){
+        System.out.println("count" + node.getChildrenCount());
+        if(node.getChildrenCount() > 0){
             Function[] children = (Function[]) node.getChildren();
             //save results from each children
             double[] values = new double[children.length];
-            for(int i=0; i<children.length-1; i++){
+            for(int i=0; i<children.length; i++){
                 values[i] = evalRFT(children[i], x, y);
             }
             //when all childrens are evaluated we can set the values of the children in this nodes function
@@ -200,6 +201,7 @@ public class RandomFunctionTreeModel extends GenModel {
                 default: return node.getResult(values[0], values[0]); //this should never be reached, just to satisfy javacompiler
             }
         }else{
+            System.out.println("Coords for x"+ x+ " y " + y);
             return node.getResult(x, y);
         }
     }
