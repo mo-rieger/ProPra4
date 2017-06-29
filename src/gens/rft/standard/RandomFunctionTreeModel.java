@@ -50,9 +50,9 @@ public class RandomFunctionTreeModel extends GenModel {
     
     private final IntegerProperty widthProperty = new SimpleIntegerProperty(250);
     private final IntegerProperty heightProperty = new SimpleIntegerProperty(250);
-    private final IntegerProperty minDepthProperty = new SimpleIntegerProperty(2);
+    private final IntegerProperty minDepthProperty = new SimpleIntegerProperty(3);
     private final IntegerProperty maxDepthProperty = new SimpleIntegerProperty(6);
-    private final IntegerProperty seedProperty = new SimpleIntegerProperty(8);
+    private final IntegerProperty seedProperty = new SimpleIntegerProperty(105);
     private FunctionFactory funcFactory;
     private Function[] functions;
     private Random random;
@@ -180,9 +180,9 @@ public class RandomFunctionTreeModel extends GenModel {
     }
     
     private Color getColor(double val){
-        int r = (int) (R * Math.abs(val));
-        int g = (int) (G * Math.abs(val));
-        int b = (int) (B * Math.abs(val));
+        int r = (int) (R * Math.abs(val)%255);
+        int g = (int) (G * Math.abs(val)%255);
+        int b = (int) (B * Math.abs(val)%255);
         return Color.rgb(r,g,b);
     }
 

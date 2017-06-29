@@ -33,57 +33,57 @@ public class FunctionFactory {
     
     private static final int UNARY = 1;
     private static final int BINARY = 2;
-    private Function[] functionPool;
+    //need to be adjusted when you add a new function into the createFunction method
+    private final int AMOUNT_OF_FUNCTIONS = 6;
     private Random random;
     
     public FunctionFactory(int seed){
-        createFunctions();
         random = new Random(seed);
     }
-    
-    private void createFunctions(){
-        functionPool = new Function[6];
-        //unary functions
-        functionPool[0] = new Function(UNARY){
-          @Override
-          public double getResult(double x, double y){
-              return Math.sin(2*Math.PI*x);
-          }
-        };
-        functionPool[1] = new Function(UNARY){
-          @Override
-          public double getResult(double x, double y){
-              return Math.cos(2*Math.PI*x);
-          }
-        };
-        functionPool[2] = new Function(BINARY){
-          @Override
-          public double getResult(double x, double y){
-              return Math.pow(x, y);
-          }
-        };
-        //binary functions
-        functionPool[3] = new Function(BINARY){
-          @Override
-          public double getResult(double x, double y){
-              return (x+y)/2;
-          }
-        };
-        functionPool[4] = new Function(BINARY){
-          @Override
-          public double getResult(double x, double y){
-              return x*y;
-          }
-        };
-        functionPool[5] = new Function(BINARY){
-          @Override
-          public double getResult(double x, double y){
-              return x-y;
-          }
-};
-    }
+
     public Function getRandomFunction(){
-        return functionPool[random.nextInt(functionPool.length-1)];
+        return createFunction(random.nextInt(AMOUNT_OF_FUNCTIONS));
+    }
+    private Function createFunction(int id){
+        switch(id){
+            case 0: return new Function(UNARY){
+                @Override
+                public double getResult(double x, double y){
+                    return Math.sin(2*Math.PI*x);
+                }
+                };
+            case 1: return new Function(UNARY){
+                @Override
+                public double getResult(double x, double y){
+                    return Math.cos(2*Math.PI*x);
+                }
+                };
+            case 2: return new Function(BINARY){
+                @Override
+                public double getResult(double x, double y){
+                    return Math.pow(x, y);
+                }
+                };
+            case 3: return new Function(BINARY){
+                @Override
+                public double getResult(double x, double y){
+                    return (x+y)/2;
+                }
+                };
+            case 4: return new Function(BINARY){
+                @Override
+                public double getResult(double x, double y){
+                    return x*y;
+                }
+                };
+            case 5: return new Function(BINARY){
+                @Override
+                public double getResult(double x, double y){
+                    return x-y;
+                }
+                };
+            default: return null;
+        }
     }
     
 }
