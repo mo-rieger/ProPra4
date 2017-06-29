@@ -56,6 +56,9 @@ public abstract class GenModel {
     // use a property instead of GenState object for easy change monitoring
     private final ObjectProperty<GenState> genState;
     volatile boolean canvasIterationDisplayedInApp;
+    //BUGFIX from Christoph Baumhardt see https://moodle2wrm.fernuni-hagen.de/mod/forum/discuss.php?d=10268
+    protected String savePath = System.getProperty("user.home") + File.separator;
+    private boolean waitForCanvasSavedToFile; // thread helper variable
 
     public GenModel() {// constructor will be automatically called from subclass
         genName = getGenName();
@@ -132,16 +135,36 @@ public abstract class GenModel {
      * @param filename The filename under which the canvas should be saved
      */
     public void saveImage(String filename){
-        WritableImage image = canvas.snapshot(new SnapshotParameters(), null);
-        File file = new File(filename);
-        try {
-            WritableImage writableImage = canvas.snapshot(null, null);
-            RenderedImage renderedImage = 
-                    SwingFXUtils.fromFXImage(writableImage, null);
-            ImageIO.write(renderedImage, "png", file);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }                 
+        // as canvas.snapshot() needs to be called from the JavaFX Application
+        // Thread, make sure it runs on it. Also don't proceed editing canvas
+        // before it was saved
+        waitForCanvasSavedToFile = true;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    File file = new File(savePath + filename + ".png");
+                    WritableImage writableImage = canvas.snapshot(null, null);
+                    RenderedImage renderedImage =
+                            SwingFXUtils.fromFXImage(writableImage, null);;
+                    ImageIO.write(renderedImage, "png", file);
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }          
+                waitForCanvasSavedToFile= false;                         
+            }
+        });
+        while (waitForCanvasSavedToFile){
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+                // interrupt current Thread so that it can be stopped later. The
+                // reason why this has to be called is because once an
+                // InterruptedException is caught isInterrupted() is false again
+                Thread.currentThread().interrupt(); // process somewhere later
+                return; // does NOT stop thread, just exits method
+            }
+        }
     }
 
     /**
@@ -176,7 +199,24 @@ public abstract class GenModel {
     public final void setGenState(String description) {
         genState.set(new GenState(description));
     }    
-
+    /**
+     * Sets the path under which all images that are saved by calling the method
+     * saveImage(String filename) will be saved to.
+     *
+     * @param path Path where images will be autosaved to
+     */
+    public void setSavePath(String path) {
+        File f = new File(path);
+        if (f.isDirectory()) { // checks for existence as well
+            savePath = path + File.separator;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+   
+    public String getSavePath() {
+        return savePath;
+    }
     /**
      * The purpose of this method is to display an iteration step of a canvas in
      * the App and waiting till the canvas actually is displayed (which 

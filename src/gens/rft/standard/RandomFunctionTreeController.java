@@ -25,6 +25,7 @@ package gens.rft.standard;
 
 import general.GenController;
 import general.GenModel;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -35,6 +36,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.DirectoryChooser;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -81,6 +83,13 @@ public class RandomFunctionTreeController extends GenController implements Initi
         } catch (Exception exception) {
             showAlert("Error", exception.getMessage());
         }
+    }
+    @FXML
+    private void handleSaveToButton(ActionEvent event) {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Path for RFT Images");
+        chooser.setInitialDirectory(new File(model.getSavePath()));
+        //File selectedDirectory = chooser.;
     }
 
     @Override

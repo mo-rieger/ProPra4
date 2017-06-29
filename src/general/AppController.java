@@ -197,7 +197,6 @@ public class AppController {
         }
     }
 
-
     @FXML
     private void handleExit() {
         Platform.exit(); // close all windows of application gracefully
@@ -235,5 +234,4 @@ public class AppController {
             }            
         } // else file save was cancelled by user
     }    
-    
 }
