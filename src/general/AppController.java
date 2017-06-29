@@ -122,7 +122,13 @@ public class AppController {
         showSpecializedGenView("Standard Random Function Tree",
                 "/gens/rft/standard/RandomFunctionTreeView.fxml");
     } 
-    
+    @FXML
+    private void showExtendedRFTGenView() {
+        showSpecializedGenView("Extended Random Function Tree Generator",
+                "/gens/rft/extended/RandomFunctionTreeExtendedView.fxml");
+        System.out.println(genController.getModel().genName);
+    } 
+            
     /**
      * Displays a new view of a specialized Generator.
      * 

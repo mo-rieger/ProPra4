@@ -112,7 +112,7 @@ public class RandomFunctionTreeModel extends GenModel {
         return result;
     }
     /**
-     * creates recursively a directional Tree in the given depth
+     * creates recursively a directional Tree in Post-order within the given depth
      * @param depth
      * @return 
      */
