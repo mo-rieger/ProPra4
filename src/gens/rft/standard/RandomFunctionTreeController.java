@@ -31,7 +31,10 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -48,11 +51,13 @@ public class RandomFunctionTreeController extends GenController implements Initi
     @FXML
     private TextField textAreaHeight;
     @FXML
-    private TextField textAreaMinDepth;
-    @FXML
-    private TextField textAreaMaxDepth;
-    @FXML
     private TextField textAreaSeed;
+    @FXML
+    private Button buttonGenerate;
+    @FXML
+    private Slider depthSlider;
+    @FXML
+    private Slider hueSlider;
     
 
     /**
@@ -63,8 +68,9 @@ public class RandomFunctionTreeController extends GenController implements Initi
         super.initialize();
         Bindings.bindBidirectional(textAreaWidth.textProperty(), model.getWidthProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(textAreaHeight.textProperty(), model.getHeightProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(textAreaMinDepth.textProperty(), model.getMinDepthProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(textAreaMaxDepth.textProperty(), model.getMaxDepthProperty(), new NumberStringConverter());       
+        Bindings.bindBidirectional(textAreaSeed.textProperty(), model.getSeedProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(depthSlider.valueProperty(), model.getDepthProperty());
+        Bindings.bindBidirectional(hueSlider.valueProperty(), model.getHueProperty());
     }    
 
     @FXML
@@ -80,6 +86,10 @@ public class RandomFunctionTreeController extends GenController implements Initi
     @Override
     public GenModel getModel() {
         return model;
+    }
+
+    @FXML
+    private void handleDepthSlider(MouseEvent event) {
     }
     
 }

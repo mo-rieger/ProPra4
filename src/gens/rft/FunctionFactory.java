@@ -85,5 +85,8 @@ public class FunctionFactory {
             default: return null;
         }
     }
+    public void setSeed(int seed){
+        random = new Random(seed);
+    }
     
 }

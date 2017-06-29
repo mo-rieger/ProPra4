@@ -40,17 +40,14 @@
                      </padding>
                   </GridPane>
                   <Separator prefWidth="200.0" />
-                  <GridPane>
+                  <GridPane prefHeight="45.0" prefWidth="323.0">
                      <children>
-                        <TextField fx:id="textAreaMinDepth" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="textAreaMaxDepth" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Tree depth">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Label text="Min:" GridPane.rowIndex="1" />
-                        <Label text="Max:" GridPane.rowIndex="2" />
+                        <Slider fx:id="depthSlider" blockIncrement="1.0" majorTickUnit="1.0" max="6.0" min="1.0" minorTickCount="0" onDragDetected="#handleDepthSlider" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -60,8 +57,6 @@
                         <Insets bottom="5.0" />
                      </padding>
                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
@@ -83,9 +78,11 @@
                      </rowConstraints>
                   </GridPane>
                   <Separator prefWidth="200.0" />
-                  <GridPane>
+                  <GridPane prefHeight="75.0" prefWidth="323.0">
                      <children>
-                        <Label text="Color:" />
+                        <Label text="Colors:" />
+                        <Label text="Hue" GridPane.rowIndex="1" />
+                        <Slider fx:id="hueSlider" majorTickUnit="360.0" max="360.0" minorTickCount="8" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -95,6 +92,7 @@
                         <Insets bottom="5.0" />
                      </padding>
                      <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
