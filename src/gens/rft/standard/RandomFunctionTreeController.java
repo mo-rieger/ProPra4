@@ -34,6 +34,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.DragEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.util.converter.NumberStringConverter;
 
@@ -59,7 +60,9 @@ public class RandomFunctionTreeController extends GenController{
     @FXML
     private Button saveToButton;
     @FXML
-    private Slider depthSlider;
+    private Slider minDepthSlider;
+    @FXML
+    private Slider maxDepthSlider;
     @FXML
     private Slider hueSlider;
     @FXML
@@ -80,7 +83,8 @@ public class RandomFunctionTreeController extends GenController{
         Bindings.bindBidirectional(textAreaWidth.textProperty(), model.getWidthProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(textAreaHeight.textProperty(), model.getHeightProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(textAreaSeed.textProperty(), model.getSeedProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(depthSlider.valueProperty(), model.getDepthProperty());
+        Bindings.bindBidirectional(minDepthSlider.valueProperty(), model.getMinDepthProperty());
+        Bindings.bindBidirectional(maxDepthSlider.valueProperty(), model.getMaxDepthProperty());
         Bindings.bindBidirectional(hueSlider.valueProperty(), model.getHueProperty());
         Bindings.bindBidirectional(imagesComboBox.valueProperty(), model.getImagesCountProperty());
     }
@@ -88,10 +92,16 @@ public class RandomFunctionTreeController extends GenController{
     protected RandomFunctionTreeModel createModel() {
         return new RandomFunctionTreeModel();
     }
+    
+    private void validate() throws Exception {
+        if(minDepthSlider.getValue()>maxDepthSlider.getValue())
+            throw new IllegalArgumentException("min must be less than max depth!");
+    }
 
     @FXML
     private void handleGenerate(ActionEvent event) {
         try {
+            validate();
             super.handleGenerate();
         } catch (Exception exception) {
             showAlert("Error", exception.getMessage());

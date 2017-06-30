@@ -40,14 +40,17 @@
                      </padding>
                   </GridPane>
                   <Separator prefWidth="200.0" />
-                  <GridPane prefHeight="45.0" prefWidth="323.0">
+                  <GridPane prefHeight="127.0" prefWidth="323.0">
                      <children>
                         <Label text="Tree depth">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Slider fx:id="depthSlider" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" />
+                        <Slider fx:id="minDepthSlider" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Slider fx:id="maxDepthSlider" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Min" GridPane.rowIndex="1" />
+                        <Label text="Max" GridPane.rowIndex="2" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -57,6 +60,8 @@
                         <Insets bottom="5.0" />
                      </padding>
                      <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
@@ -104,7 +109,7 @@
                         <Label text="Path:" GridPane.rowIndex="2" />
                         <Button fx:id="saveToButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSaveToButton" prefHeight="27.0" prefWidth="162.0" text="Save to" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <ComboBox fx:id="imagesComboBox" prefHeight="27.0" prefWidth="165.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ToggleButton fx:id="createSetToggleButton" mnemonicParsing="false" onAction="#handleCreateSet" text="Create Set" GridPane.columnIndex="1" />
+                        <ToggleButton fx:id="createSetToggleButton" mnemonicParsing="false" onAction="#handleCreateSet" prefHeight="27.0" prefWidth="174.0" text="Create Set" GridPane.columnIndex="1" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

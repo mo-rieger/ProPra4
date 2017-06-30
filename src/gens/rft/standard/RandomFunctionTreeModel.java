@@ -44,19 +44,23 @@ public class RandomFunctionTreeModel extends GenModel {
 
     private final IntegerProperty widthProperty = new SimpleIntegerProperty(500);
     private final IntegerProperty heightProperty = new SimpleIntegerProperty(500);
-    protected final DoubleProperty depthProperty = new SimpleDoubleProperty(6);
+    protected final DoubleProperty minDepthProperty = new SimpleDoubleProperty(3);
+    protected final DoubleProperty maxDepthProperty = new SimpleDoubleProperty(6);
     protected final IntegerProperty seedProperty = new SimpleIntegerProperty(4845212);
     private final DoubleProperty hueProperty = new SimpleDoubleProperty(50);
     private final IntegerProperty imagesCountProperty = new SimpleIntegerProperty(6);
 
     private int hue;
+    private int depth;
     private boolean createSet = false;
     protected FunctionFactory funcFactory;
+    private Random random;
 
     /**
      * Constructor set up new factory for functions
      */
     public RandomFunctionTreeModel() {
+        random = new Random();
         funcFactory = new FunctionFactory(seedProperty.getValue());
         setHue();
     }
@@ -83,7 +87,7 @@ public class RandomFunctionTreeModel extends GenModel {
         // to generate the same image with the same seed we have to reset the pseudorandom int-stream
         funcFactory.setSeed(seedProperty.intValue());
         setHue();
-        Function rootNode = createTree(depthProperty.intValue());
+        Function rootNode = createTree(getDepth());
         GraphicsContext gc = canvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
         //loop through every pixel
@@ -99,14 +103,13 @@ public class RandomFunctionTreeModel extends GenModel {
     }
 
     /**
-     * generate a set of images also save the images at a specified path
+     * generate a set of images with different seeds
+     * the images are also saved at a specified path
      * (default: home)
      */
     private void generateSet() {
-        Random rnd = new Random();
         for (int i = 0; i < imagesCountProperty.intValue(); i++) {
-            seedProperty.set(rnd.nextInt());
-            depthProperty.set(rnd.nextInt(10));
+            seedProperty.set(random.nextInt());
             generateImage();
             this.saveImage(getImageName());
         }
@@ -119,7 +122,7 @@ public class RandomFunctionTreeModel extends GenModel {
      * touched
      */
     protected String getImageName() {
-        return "depth" + depthProperty.intValue() + "seed" + seedProperty.intValue() + "hue" + hue;
+        return "depth" + depth + "seed" + seedProperty.intValue() + "hue" + hue;
     }
 
     /**
@@ -187,6 +190,21 @@ public class RandomFunctionTreeModel extends GenModel {
     private Color getColor(double val) {
         return Color.hsb((val * 360 + hue) % 360, val, val);
     }
+    
+    /**
+     * get random depth within the given bounds
+     * @return 
+     */
+    private int getDepth() {
+        int bound = maxDepthProperty.intValue() - minDepthProperty.intValue();
+        // to recreate an image with a specified depth you can set min = max
+        // but we have handle this seperate, because bound must be positive in Random
+        if (bound == 0 )
+            depth = maxDepthProperty.intValue();
+        else
+            depth = minDepthProperty.intValue() + random.nextInt(bound);
+        return depth;
+    }
 
     public IntegerProperty getWidthProperty() {
         return widthProperty;
@@ -199,9 +217,13 @@ public class RandomFunctionTreeModel extends GenModel {
     public IntegerProperty getSeedProperty() {
         return seedProperty;
     }
-
-    public DoubleProperty getDepthProperty() {
-        return depthProperty;
+    
+    public DoubleProperty getMinDepthProperty() {
+        return minDepthProperty;
+    }
+    
+    public DoubleProperty getMaxDepthProperty() {
+        return maxDepthProperty;
     }
 
     public DoubleProperty getHueProperty() {

@@ -33,7 +33,6 @@ import gens.rft.standard.RandomFunctionTreeModel;
 public class RandomFunctionTreeExtendedModel extends RandomFunctionTreeModel{
     
     public RandomFunctionTreeExtendedModel(){
-        depthProperty.set(5);
         seedProperty.set(65);
     }
         
