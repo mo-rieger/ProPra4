@@ -25,20 +25,20 @@ package gens.rft.extended;
 
 import general.GenModel;
 import gens.rft.standard.RandomFunctionTreeController;
-import gens.rft.standard.RandomFunctionTreeModel;
 
 /**
  *
  * @author Moritz Rieger
  */
 public class RandomFunctionTreeExtendedController extends RandomFunctionTreeController {
-    
+
     @Override
     public GenModel getModel() {
         return model;
     }
+
     @Override
-    protected RandomFunctionTreeExtendedModel initModel(){
-        return  new RandomFunctionTreeExtendedModel();
+    protected RandomFunctionTreeExtendedModel createModel() {
+        return new RandomFunctionTreeExtendedModel();
     }
 }

@@ -65,6 +65,6 @@ public class RandomFunctionTreeExtendedModel extends RandomFunctionTreeModel{
     }
     @Override
     protected String getImageName(){
-        return "extendedrft-"+super.getImageName();
+        return "extended-rft-"+super.getImageName();
     }
 }

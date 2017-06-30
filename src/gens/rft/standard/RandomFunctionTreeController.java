@@ -26,18 +26,14 @@ package gens.rft.standard;
 import general.GenController;
 import general.GenModel;
 import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.util.converter.NumberStringConverter;
 
@@ -46,8 +42,8 @@ import javafx.util.converter.NumberStringConverter;
  *
  * @author Moritz Rieger
  */
-public class RandomFunctionTreeController extends GenController implements Initializable{
-    
+public class RandomFunctionTreeController extends GenController{
+
     protected RandomFunctionTreeModel model;
 
     @FXML
@@ -68,40 +64,40 @@ public class RandomFunctionTreeController extends GenController implements Initi
     private Slider hueSlider;
     @FXML
     private ComboBox imagesComboBox;
-    
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize() {
         super.initialize();
-        model = initModel();
-        
-        imagesComboBox.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12);
+        model = createModel();
+        // set UI controls
+        imagesComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
         saveToButton.setDisable(true);
         imagesComboBox.setDisable(true);
-        //connect model and view via Bindings
+        // connect model and view via Bindings
         Bindings.bindBidirectional(textAreaWidth.textProperty(), model.getWidthProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(textAreaHeight.textProperty(), model.getHeightProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(textAreaSeed.textProperty(), model.getSeedProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(depthSlider.valueProperty(), model.getDepthProperty());
         Bindings.bindBidirectional(hueSlider.valueProperty(), model.getHueProperty());
         Bindings.bindBidirectional(imagesComboBox.valueProperty(), model.getImagesCountProperty());
-        
-    }    
-    protected RandomFunctionTreeModel initModel(){
-        return  new RandomFunctionTreeModel();
     }
+
+    protected RandomFunctionTreeModel createModel() {
+        return new RandomFunctionTreeModel();
+    }
+
     @FXML
     private void handleGenerate(ActionEvent event) {
-         try {
-            model.validate();
+        try {
             super.handleGenerate();
         } catch (Exception exception) {
             showAlert("Error", exception.getMessage());
         }
     }
+
     @FXML
     private void handleCreateSet(ActionEvent event) {
         boolean isSelected = createSetToggleButton.selectedProperty().getValue();
@@ -111,19 +107,20 @@ public class RandomFunctionTreeController extends GenController implements Initi
         createSetToggleButton.setText(text);
         model.setCreateSet(isSelected);
     }
+
     @FXML
     private void handleSaveToButton(ActionEvent event) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Path for RFT Images");
         chooser.setInitialDirectory(new File(model.getSavePath()));
         File selectedDirectory = chooser.showDialog(getStage());
-        //System.out.println(selectedDirectory.getPath());
-        if(selectedDirectory != null)
+        if (selectedDirectory != null) {
             model.setSavePath(selectedDirectory.getPath());
+        }
     }
 
     @Override
     public GenModel getModel() {
         return model;
-    }    
+    }
 }

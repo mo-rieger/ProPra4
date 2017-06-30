@@ -27,103 +27,146 @@ import java.util.Random;
 
 /**
  *
+ * This Factory creates pseudorandom Functions depended on the seed you
+ * instanciated the Factory with. Every Functions domain and co-domain is from
+ * [0,1]
+ *
  * @author Moritz Rieger
  */
 public class FunctionFactory {
-    
+
     protected static final int UNARY = 1;
     protected static final int BINARY = 2;
     protected final int TERNARY = 3;
     protected final int QUATERNARY = 4;
     protected final int QUINARY = 5;
-    private final int UNARY_BINARY_FUNCTIONS = 5;
     //need to be adjusted when you add a new function into the createFunction method
-    protected int AMOUNT_OF_FUNCTIONS = 10;
+    private final int UNARY_BINARY_FUNCTIONS = 5;
+    protected final int AMOUNT_OF_FUNCTIONS = 10;
+
     protected Random random;
-    
-    public FunctionFactory(int seed){
+
+    public FunctionFactory(int seed) {
         random = new Random(seed);
     }
 
-    public Function getRandomFunction(){
-        return createFunction(random.nextInt(AMOUNT_OF_FUNCTIONS));
-    }
     /**
-     * if you add a function to this method make sure its picture is just in the right intervall [0,1]
+     * This is the heart of the factory. In every case the getResult() Method
+     * from a common Function is overriden by a anonymous class. Its very
+     * important that the Function just goes from [0,1]->[0,1] otherwise the rft
+     * generator wont work properly, you'll get an Exceptions in the Color
+     * calculating method. if you add a function to this method make sure its
+     * picture is just in the right intervall [0,1]
+     *
      * @param id
-     * @return 
+     * @return
      */
-    protected Function createFunction(int id){
-        switch(id){
-            case 0: return new Function(UNARY){
-                @Override
-                public double getResult(double[] param){
-                    return Math.abs(Math.sin(2*Math.PI*param[0]));
-                }
+    protected Function createFunction(int id) {
+        switch (id) {
+            case 0:
+                return new Function(UNARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return Math.abs(Math.sin(2 * Math.PI * param[0]));
+                    }
                 };
-            case 1: return new Function(UNARY){
-                @Override
-                public double getResult(double[] param){
-                    return Math.abs(Math.cos(2*Math.PI*param[0]));
-                }
+            case 1:
+                return new Function(UNARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return Math.abs(Math.cos(2 * Math.PI * param[0]));
+                    }
                 };
-            case 2: return new Function(BINARY){
-                @Override
-                public double getResult(double[] param){
-                    return Math.pow(param[0], param[1]);
-                }
+            case 2:
+                return new Function(BINARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return Math.pow(param[0], param[1]);
+                    }
                 };
-            case 3: return new Function(BINARY){
-                @Override
-                public double getResult(double[] param){
-                    return (param[0]+param[1])/2;
-                }
+            case 3:
+                return new Function(BINARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return (param[0] + param[1]) / 2;
+                    }
                 };
-            case 4: return new Function(BINARY){
-                @Override
-                public double getResult(double[] param){
-                    return param[0]*param[1];
-                }
+            case 4:
+                return new Function(BINARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return param[0] * param[1];
+                    }
                 };
-            case 5: return new Function(BINARY){
-                @Override
-                    public double getResult(double[] param){
-                    return Math.abs(param[0]-param[1]);
-                }
+            case 5:
+                return new Function(BINARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return Math.abs(param[0] - param[1]);
+                    }
                 };
-            case 6: return new Function(TERNARY){
-                @Override
-                    public double getResult(double[] param){
-                    return (param[0]+param[1]+param[2])/3;
-                }
+            case 6:
+                return new Function(TERNARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return (param[0] + param[1] + param[2]) / 3;
+                    }
                 };
-            case 7: return new Function(QUATERNARY){
-                @Override
-                    public double getResult(double[] param){
-                    return Math.abs( Math.sin(2*Math.PI*param[0]) * Math.cos(2*Math.PI*param[1]) * Math.sin(2*Math.PI*param[2]) * Math.cos(2*Math.PI*param[3]));
-                }
+            case 7:
+                return new Function(QUATERNARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return Math.abs(
+                                Math.sin(2 * Math.PI * param[0]) *
+                                Math.cos(2 * Math.PI * param[1]) *
+                                Math.sin(2 * Math.PI * param[2]) *
+                                Math.cos(2 * Math.PI * param[3]));
+                    }
                 };
-            case 8: return new Function(QUATERNARY){
-                @Override
-                    public double getResult(double[] param){
-                    return ((param[0]*param[1])+(param[2]*param[3]))/2;
-                }
+            case 8:
+                return new Function(QUATERNARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return ((param[0] * param[1]) +
+                                (param[2] * param[3])) / 2;
+                    }
                 };
-            case 9: return new Function(QUINARY){
-                @Override
-                    public double getResult(double[] param){
-                    return Math.abs(( Math.sin(2*Math.PI*param[0]) * Math.cos(2*Math.PI*param[1]) * Math.sin(2*Math.PI*param[2]) * Math.cos(2*Math.PI*param[3])+param[4])/2);
-                }
+            case 9:
+                return new Function(QUINARY) {
+                    @Override
+                    public double getResult(double[] param) {
+                        return Math.abs(
+                                (Math.sin(2 * Math.PI * param[0]) *
+                                 Math.cos(2 * Math.PI * param[1]) *
+                                 Math.sin(2 * Math.PI * param[2]) *
+                                 Math.cos(2 * Math.PI * param[3]) +
+                                 param[4]
+                                ) / 2);
+                    }
                 };
-            default: return null;
+            default:
+                return null;
         }
     }
-    public void setSeed(int seed){
+
+    public void setSeed(int seed) {
         random = new Random(seed);
     }
-    public Function getUnaryOrBinaryFunction(){
-        //make sure we only get a random ID from a unary or binary function
+
+    /**
+     *
+     * @return a random function wich is just unary or binary
+     */
+    public Function getUnaryOrBinaryFunction() {
         return createFunction(random.nextInt(UNARY_BINARY_FUNCTIONS));
     }
-    
+
+    /**
+     *
+     * @return a random Function this could be one with more than two parameters
+     */
+    public Function getRandomFunction() {
+        return createFunction(random.nextInt(AMOUNT_OF_FUNCTIONS));
+    }
+
 }
