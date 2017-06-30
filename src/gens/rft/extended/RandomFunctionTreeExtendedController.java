@@ -32,10 +32,13 @@ import gens.rft.standard.RandomFunctionTreeModel;
  * @author Moritz Rieger
  */
 public class RandomFunctionTreeExtendedController extends RandomFunctionTreeController {
-    private RandomFunctionTreeExtendedModel model =  new RandomFunctionTreeExtendedModel();
     
     @Override
     public GenModel getModel() {
         return model;
-    }    
+    }
+    @Override
+    protected RandomFunctionTreeExtendedModel initModel(){
+        return  new RandomFunctionTreeExtendedModel();
+    }
 }

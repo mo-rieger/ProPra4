@@ -48,7 +48,7 @@ import javafx.util.converter.NumberStringConverter;
  */
 public class RandomFunctionTreeController extends GenController implements Initializable{
     
-    protected RandomFunctionTreeModel model = new RandomFunctionTreeModel();
+    protected RandomFunctionTreeModel model;
 
     @FXML
     private TextField textAreaWidth;
@@ -76,6 +76,8 @@ public class RandomFunctionTreeController extends GenController implements Initi
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         super.initialize();
+        model = initModel();
+        
         imagesComboBox.getItems().addAll(1,2,3,4,5,6,7,8,9,10,11,12);
         saveToButton.setDisable(true);
         imagesComboBox.setDisable(true);
@@ -88,7 +90,9 @@ public class RandomFunctionTreeController extends GenController implements Initi
         Bindings.bindBidirectional(imagesComboBox.valueProperty(), model.getImagesCountProperty());
         
     }    
-
+    protected RandomFunctionTreeModel initModel(){
+        return  new RandomFunctionTreeModel();
+    }
     @FXML
     private void handleGenerate(ActionEvent event) {
          try {

@@ -23,6 +23,7 @@
  */
 package gens.rft.extended;
 
+import gens.rft.Function;
 import gens.rft.standard.RandomFunctionTreeModel;
 
 /**
@@ -32,12 +33,38 @@ import gens.rft.standard.RandomFunctionTreeModel;
 public class RandomFunctionTreeExtendedModel extends RandomFunctionTreeModel{
     
     public RandomFunctionTreeExtendedModel(){
-        funcFactory = new ExtentedFunctionFactory(seedProperty.getValue());
-        setHue();
+        depthProperty.set(5);
+        seedProperty.set(65);
     }
-    
+        
     @Override
     public String getGenName() {
         return "Extended Random Function Tree Generator";
+    }
+     /**
+     * creates recursively a directional Tree in Post-order within the given depth
+     * @param depth
+     * @return 
+     */
+    @Override
+    protected Function createTree(int depth){
+        Function node;
+        //create one children for unary, two for binary ...
+        if(depth > 0){
+            node = funcFactory.getRandomFunction();
+            Function[] children = new Function[node.getType()];
+            for(int i=0; i < children.length; i++){
+                children[i] = createTree(depth-1);
+            }
+            node.setChildren(children);
+        }else{
+            //make sure that leafes only get unary or binary functions
+            node = funcFactory.getUnaryOrBinaryFunction();
+        }
+        return node;
+    }
+    @Override
+    protected String getImageName(){
+        return "extendedrft-"+super.getImageName();
     }
 }

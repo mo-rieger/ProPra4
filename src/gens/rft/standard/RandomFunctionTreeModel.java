@@ -48,10 +48,10 @@ public class RandomFunctionTreeModel extends GenModel {
     private static final int BINARY = 2;
     private int hue;
     
-    private final IntegerProperty widthProperty = new SimpleIntegerProperty(250);
-    private final IntegerProperty heightProperty = new SimpleIntegerProperty(250);
-    private final DoubleProperty depthProperty = new SimpleDoubleProperty(3);
-    protected final IntegerProperty seedProperty = new SimpleIntegerProperty(105);
+    private final IntegerProperty widthProperty = new SimpleIntegerProperty(500);
+    private final IntegerProperty heightProperty = new SimpleIntegerProperty(500);
+    protected final DoubleProperty depthProperty = new SimpleDoubleProperty(4);
+    protected final IntegerProperty seedProperty = new SimpleIntegerProperty(4838);
     private final DoubleProperty hueProperty = new SimpleDoubleProperty(50);
     private final IntegerProperty imagesCountProperty = new SimpleIntegerProperty(6);
     private boolean createSet = false;
@@ -103,8 +103,11 @@ public class RandomFunctionTreeModel extends GenModel {
             seedProperty.set(rnd.nextInt());
             depthProperty.set(rnd.nextInt(10));
             generateImage();
-            this.saveImage("depth"+depthProperty.intValue()+"seed"+seedProperty.intValue()+"hue"+hue);
+            this.saveImage(getImageName());
         }
+    }
+    protected String getImageName(){
+        return "depth"+depthProperty.intValue()+"seed"+seedProperty.intValue()+"hue"+hue;
     }
     private double[] normalize(int x,int y){
         double[] result = {x/widthProperty.doubleValue(), y/heightProperty.doubleValue()};
@@ -115,10 +118,8 @@ public class RandomFunctionTreeModel extends GenModel {
      * @param depth
      * @return 
      */
-    private Function createTree(int depth){
-        Function node;
-        //take random function from pool
-        node = funcFactory.getRandomFunction();
+    protected Function createTree(int depth){
+        Function node = funcFactory.getUnaryOrBinaryFunction();
         //create one children for unary, two for binary ...
           if(depth > 0){
             Function[] children = new Function[node.getType()];
@@ -145,12 +146,9 @@ public class RandomFunctionTreeModel extends GenModel {
                 values[i] = evalRFT(children[i], parameter);
             }
             //when all childrens are evaluated we can set the values of the children in this nodes function
-            switch (node.getType()){
-                case UNARY: return node.getResult(values);
-                case BINARY: return node.getResult(values);
-                default: return node.getResult(values); //this should never be reached, just to satisfy javacompiler
-            }
+            return node.getResult(values);
         }else{
+            //here we reach the leafes
             return node.getResult(parameter);
         }
     }
