@@ -24,7 +24,7 @@
 package gens.rft;
 
 /**
- *
+ * A Function can be a Node in a RFT.
  * @author Moritz Rieger
  */
 public class Function implements TreeNode{
@@ -41,7 +41,12 @@ public class Function implements TreeNode{
     public Function(int type) {
         this.type = type;
     }
-    
+    /**
+     * This Method is overriden for any specific Function, for an Example
+     * see line 64 createFunction method in Class FunctionFactory
+     * @param param
+     * @return 
+     */
     public double getResult(double[] param){
         return param[0];
     }

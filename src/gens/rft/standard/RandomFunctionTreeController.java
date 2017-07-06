@@ -43,16 +43,16 @@ import javafx.util.converter.NumberStringConverter;
  *
  * @author Moritz Rieger
  */
-public class RandomFunctionTreeController extends GenController{
+public class RandomFunctionTreeController extends GenController {
 
     protected RandomFunctionTreeModel model;
 
     @FXML
-    private TextField textAreaWidth;
+    private TextField textFieldWidth;
     @FXML
-    private TextField textAreaHeight;
+    private TextField textFieldHeight;
     @FXML
-    private TextField textAreaSeed;
+    private TextField textFieldSeed;
     @FXML
     private Button buttonGenerate;
     @FXML
@@ -79,10 +79,10 @@ public class RandomFunctionTreeController extends GenController{
         imagesComboBox.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
         saveToButton.setDisable(true);
         imagesComboBox.setDisable(true);
-        // connect model and view via Bindings
-        Bindings.bindBidirectional(textAreaWidth.textProperty(), model.getWidthProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(textAreaHeight.textProperty(), model.getHeightProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(textAreaSeed.textProperty(), model.getSeedProperty(), new NumberStringConverter());
+
+        setValuesFromModel();
+        addListeners();
+        // connect model and view via Bindings where no validation is needed
         Bindings.bindBidirectional(minDepthSlider.valueProperty(), model.getMinDepthProperty());
         Bindings.bindBidirectional(maxDepthSlider.valueProperty(), model.getMaxDepthProperty());
         Bindings.bindBidirectional(hueSlider.valueProperty(), model.getHueProperty());
@@ -92,10 +92,11 @@ public class RandomFunctionTreeController extends GenController{
     protected RandomFunctionTreeModel createModel() {
         return new RandomFunctionTreeModel();
     }
-    
+
     private void validate() throws Exception {
-        if(minDepthSlider.getValue()>maxDepthSlider.getValue())
+        if (minDepthSlider.getValue() > maxDepthSlider.getValue()) {
             throw new IllegalArgumentException("min must be less than max depth!");
+        }
     }
 
     @FXML
@@ -132,5 +133,63 @@ public class RandomFunctionTreeController extends GenController{
     @Override
     public GenModel getModel() {
         return model;
+    }
+
+    private void setValuesFromModel() {
+        textFieldWidth.textProperty().setValue(
+                String.valueOf(model.getWidthProperty().intValue()));
+        textFieldHeight.textProperty().setValue(
+                String.valueOf(model.getHeightProperty().intValue()));
+        textFieldSeed.textProperty().setValue(
+                String.valueOf(model.getSeedProperty().intValue()));
+    }
+    /**
+     * add Listeners to set model with new userinput and validate input
+     */
+    private void addListeners() {
+        textFieldWidth.focusedProperty().addListener((observableBoolean,
+                oldValue, newValue) -> {
+            if (!newValue) { // newValue=0 means no focus -> if no longer focused
+                try {
+                    String s = textFieldWidth.textProperty().getValue();
+                    int width = Integer.parseInt(s);
+                    model.setWidth(width);
+                } catch (IllegalArgumentException ex) {
+                    // display last valid value for Width from model
+                    textFieldWidth.textProperty().setValue(
+                            String.valueOf(model.getWidthProperty().intValue()));
+                    showInputAlert(ex.getMessage());
+                }
+            }
+        });
+
+        textFieldHeight.focusedProperty().addListener((observableBoolean,
+                oldValue, newValue) -> {
+            if (!newValue) {
+                try {
+                    String s = textFieldHeight.textProperty().getValue();
+                    int height = Integer.parseInt(s);
+                    model.setHeight(height);
+                } catch (IllegalArgumentException ex) {
+                    textFieldHeight.textProperty().setValue(
+                            String.valueOf(model.getHeightProperty().intValue()));
+                    showInputAlert(ex.getMessage());
+                }
+            }
+        });
+        textFieldSeed.focusedProperty().addListener((observableBoolean,
+                oldValue, newValue) -> {
+            if (!newValue) {
+                try {
+                    String s = textFieldSeed.textProperty().getValue();
+                    int seed = Integer.parseInt(s);
+                    model.setSeed(seed);
+                } catch (IllegalArgumentException ex) {
+                    textFieldSeed.textProperty().setValue(
+                            String.valueOf(model.getSeedProperty().intValue()));
+                    showInputAlert(ex.getMessage());
+                }
+            }
+        });
     }
 }

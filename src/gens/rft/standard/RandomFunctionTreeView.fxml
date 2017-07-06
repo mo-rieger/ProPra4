@@ -25,8 +25,8 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField fx:id="textAreaWidth" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="textAreaHeight" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="textFieldWidth" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="textFieldHeight" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Size">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -68,7 +68,7 @@
                   <Separator prefWidth="200.0" />
                   <GridPane>
                      <children>
-                        <TextField fx:id="textAreaSeed" GridPane.columnIndex="1" />
+                        <TextField fx:id="textFieldSeed" GridPane.columnIndex="1" />
                         <Label text="Seed:" />
                      </children>
                      <columnConstraints>

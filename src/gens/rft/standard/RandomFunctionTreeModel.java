@@ -233,7 +233,19 @@ public class RandomFunctionTreeModel extends GenModel {
     public IntegerProperty getImagesCountProperty() {
         return imagesCountProperty;
     }
-
+    
+    public void setWidth(int width) {
+        widthProperty.set(width);
+    }
+    
+    public void setHeight(int height) {
+        heightProperty.set(height);
+    }
+    
+    public void setSeed(int seed) {
+        seedProperty.set(seed);
+    }
+    
     public void setHue() {
         hue = hueProperty.intValue();
     }

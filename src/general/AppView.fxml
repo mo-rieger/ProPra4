@@ -67,8 +67,14 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="DIGIT7" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#showStandardRFTGenView" text="Standard Random Function Tree Generator" />
-                  <MenuItem mnemonicParsing="false" onAction="#showExtendedRFTGenView" text="Extended Random Function Tree" />
+                  <MenuItem mnemonicParsing="false" onAction="#showStandardRFTGenView" text="Standard Random Function Tree Generator">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="DIGIT8" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#showExtendedRFTGenView" text="Extended Random Function Tree" >
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="DIGIT9" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
                <accelerator>
                   <KeyCodeCombination alt="UP" code="G" control="ANY" meta="UP" shift="UP" shortcut="UP" />
